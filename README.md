@@ -159,7 +159,7 @@ hostname -F /etc/hostnam
 ```bash
 nano /etc/bind/zones/db.K21.com
 
-#Tambahkan ini
+// Tambahkan ini
 Eonwe.K21.com.      IN      A       10.74.1.1
 Earendil.K21.com.   IN      A       10.74.1.2
 Elwing.K21.com.     IN      A       10.74.1.3
@@ -187,53 +187,21 @@ Lalu cek dengan hostname `dig earendil.K21.com` & `dig sirion.K21.com`
 
 > Lonceng Valmar berdentang mengikuti irama Tirion. Pastikan zone transfer berjalan, Pastikan Valmar (ns2) telah menerima salinan zona terbaru dari Tirion (ns1). Nilai serial SOA di keduanya harus sama
 
-```bash
-
-```
+Untuk Tirion
 
 ```bash
-
+dig @10.74.3.3 K21.com SOA
 ```
+<img width="895" height="386" alt="image" src="https://github.com/user-attachments/assets/bcbf7379-efbe-4992-8e72-6f442939fb8c" />
+
+Untuk Valmar
 
 ```bash
-
+dig @10.74.3.2 K21.com SOA
 ```
+<img width="896" height="383" alt="image" src="https://github.com/user-attachments/assets/b05c13f0-29ec-4fd3-877c-241b0c27a73f" />
 
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
+Perhatikan bagian **ANSWER SECTION**, bagian pojok kanan ada serial number, dan disini serial numbernya sama, membuktikan bahwa zone transfer berjalan dengan benar. Valmar telah menerima salinan zona terbaru dari Tirion.
 
 ## Question 7
 
@@ -243,14 +211,243 @@ Lalu cek dengan hostname `dig earendil.K21.com` & `dig sirion.K21.com`
  - app.<xxxx>.com → vingilot.<xxxx>.com.
 Verifikasi dari dua klien berbeda bahwa seluruh hostname tersebut ter-resolve ke tujuan yang benar dan konsisten.
 
+Node Tirion
+
+```bash
+nano /etc/bind/zones/db.K21.com
+
+// Lalu tambahkan bagian nomor serialnya +1 (awalnya 1 → 2)
+// Tambahkan juga
+
+www.K21.com.        IN      CNAME   Sirion.K21.com.
+static.K21.com.     IN      CNAME   Lindon.K21.com.
+app.K21.com.        IN      CNAME   Vingilot.K21.com.
+```
+
 ## Question 8
 
 > Setiap jejak harus bisa diikuti. Di Tirion (ns1) deklarasikan satu reverse zone untuk segmen DMZ tempat Sirion, Lindon, Vingilot berada. Di Valmar (ns2) tarik reverse zone tersebut sebagai slave, isi PTR untuk ketiga hostname itu agar pencarian balik IP address mengembalikan hostname yang benar, lalu pastikan query reverse untuk alamat Sirion, Lindon, Vingilot dijawab authoritative.
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
 
 ## Question 9
 
 > Lampion Lindon dinyalakan. Jalankan web statis pada hostname static.<xxxx>.com dan buka folder arsip /annals/ dengan autoindex (directory listing) sehingga isinya dapat ditelusuri. Akses harus dilakukan melalui hostname, bukan IP.
 
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
 ## Question 10
 
 > Vingilot mengisahkan cerita dinamis. Jalankan web dinamis (PHP-FPM) pada hostname app.<xxxx>.com dengan beranda dan halaman about, serta terapkan rewrite sehingga /about berfungsi tanpa akhiran .php. Akses harus dilakukan melalui hostname.
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
