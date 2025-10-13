@@ -21,7 +21,7 @@ Member :
 - [Question 9](#question-9)
 - [Question 10](#question-10)
 
-#question-1
-> **Question 1**
+## Question 1
+
 > Di tepi Beleriand yang porak-poranda, Eonwe merentangkan tiga jalur: Barat untuk Earendil dan Elwing, Timur untuk Círdan, Elrond, Maglor, serta pelabuhan DMZ bagi Sirion, Tirion, Valmar, Lindon, Vingilot. Tetapkan alamat dan default gateway tiap tokoh sesuai glosarium yang sudah diberikan.
 
