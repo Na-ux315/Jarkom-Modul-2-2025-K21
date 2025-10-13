@@ -160,6 +160,7 @@ hostname -F /etc/hostnam
 nano /etc/bind/zones/db.K21.com
 
 // Tambahkan ini
+
 Eonwe.K21.com.      IN      A       10.74.1.1
 Earendil.K21.com.   IN      A       10.74.1.2
 Elwing.K21.com.     IN      A       10.74.1.3
@@ -228,226 +229,45 @@ app.K21.com.        IN      CNAME   Vingilot.K21.com.
 
 > Setiap jejak harus bisa diikuti. Di Tirion (ns1) deklarasikan satu reverse zone untuk segmen DMZ tempat Sirion, Lindon, Vingilot berada. Di Valmar (ns2) tarik reverse zone tersebut sebagai slave, isi PTR untuk ketiga hostname itu agar pencarian balik IP address mengembalikan hostname yang benar, lalu pastikan query reverse untuk alamat Sirion, Lindon, Vingilot dijawab authoritative.
 
-```bash
+Buat reverse zone untuk DMZ pada Tirion dan tarik sebagai slave di Valmar.
 
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
+Untuk cek  PTR menggunakan `dig -x [IP]`
 
 ## Question 9
 
 > Lampion Lindon dinyalakan. Jalankan web statis pada hostname static.<xxxx>.com dan buka folder arsip /annals/ dengan autoindex (directory listing) sehingga isinya dapat ditelusuri. Akses harus dilakukan melalui hostname, bukan IP.
 
-```bash
+Node Lindon
 
+```bash
+apt-get update && apt-get install nginx -y
 ```
 
 ```bash
-
+mkdir -p /var/www/lindon/annals
 ```
 
 ```bash
-
+cat > /var/www/lindon/annals/index.html
 ```
 
 ```bash
-
+systemctl enable --now nginx
 ```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
+Di client: `curl -I http://static.K21.com/annals/`
 
 ## Question 10
 
 > Vingilot mengisahkan cerita dinamis. Jalankan web dinamis (PHP-FPM) pada hostname app.<xxxx>.com dengan beranda dan halaman about, serta terapkan rewrite sehingga /about berfungsi tanpa akhiran .php. Akses harus dilakukan melalui hostname.
 
-```bash
+Node Vingilot
 
+```bash
+apt-get update && apt-get install nginx -y php8.4-fpm php8.4-cli
 ```
 
 ```bash
-
+systemctl enable --now nginx php8.4-fpm
 ```
 
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
+Untuk memverivikasi kita menggunakan `curl -I http://app.K21.com/` & `curl -I http://app.K21.com/about`
