@@ -56,3 +56,201 @@ Lalu tes untuk memastikan agar semua klien bisa saling berkomunikasi melalui Eon
 
 <img width="854" height="209" alt="Screenshot 2025-10-13 175422" src="https://github.com/user-attachments/assets/7a392a09-94b2-421a-a5f5-4349522deb8f" />
 <img width="851" height="203" alt="Screenshot 2025-10-13 175511" src="https://github.com/user-attachments/assets/7e2b6b48-6d10-4581-8c75-d38741f9907c" />
+
+## Question 4
+
+> Para penjaga nama naik ke menara, di Tirion (ns1/master) bangun zona <xxxx>.com sebagai authoritative dengan SOA yang menunjuk ke ns1.<xxxx>.com dan catatan NS untuk ns1.<xxxx>.com dan ns2.<xxxx>.com. Buat A record untuk ns1.<xxxx>.com dan ns2.<xxxx>.com yang mengarah ke alamat Tirion dan Valmar sesuai glosarium, serta A record apex <xxxx>.com yang mengarah ke alamat Sirion (front door), aktifkan notify dan allow-transfer ke Valmar, set forwarders ke 192.168.122.1. Di Valmar (ns2/slave) tarik zona <xxxx>.com dari Tirion dan pastikan menjawab authoritative. pada seluruh host non-router ubah urutan resolver menjadi IP dari ns1.<xxxx>.com → ns2.<xxxx>.com → 192.168.122.1. Verifikasi query ke apex dan hostname layanan dalam zona dijawab melalui ns1/ns2.
+
+- Node Tirion
+
+```bash
+apt-get update && apt-get install bind9 -y
+```
+
+```bash
+nano /etc/bind/named.conf.options
+
+options {
+        directory "/var/cache/bind";
+};
+forwarders { 192.168.122.1; };
+```
+
+```bash
+nano /etc/bind/named.conf.local
+
+zone "K21.com" { type master; file "/etc/bind/db.K21.com"; allow-transfer { 10.74.3.3; }; // IP Valmar notify yes; };
+```
+
+```bash
+nano /etc/bind/db.K21.com
+
+$TTL    604800
+@   IN  SOA ns1.K21.com. admin.K21.com. (
+            1           ; Serial
+            604800      ; Refresh
+            86400       ; Retry
+            2419200     ; Expire
+            604800 )    ; Negative Cache TTL
+;
+@   IN  NS  ns1.K21.com.
+@   IN  NS  ns2.K21.com.
+
+@   IN  A   10.74.3.6    ; Sirion
+ns1 IN  A   10.74.3.2    ; Tirion
+ns2 IN  A   10.74.3.3    ; Valmar
+
+named-checkconf
+named-checkzone K21.com /etc/bind/db.K21.com
+
+named
+
+dig @localhost K21.com
+```
+
+- Node Valmar
+
+```bash
+apt-get update && apt-get install bind9 -y
+```
+
+```bash
+nano /etc/bind/named.conf.options
+
+options {
+    directory "/var/cache/bind";
+    
+    forwarders {
+        192.168.122.1;
+    };
+};
+```
+
+```bash
+nano /etc/bind/named.conf.local
+
+zone "K21.com" {
+    type slave;
+    file "db.K21.com";
+    masters { 10.74.3.2; }; // IP Tirion
+};
+named-checkconf 
+Service named restart
+
+echo "nameserver 10.74.3.2" > /etc/resolv.conf
+echo "nameserver 10.74.3.3" >> /etc/resolv.conf
+echo "nameserver 192.168.122.1" >> /etc/resolv.conf
+```
+Untuk memverivikasi kita menggunakan `dig K21.com` begitu juga dengan `dig ns1.k25.com`
+
+<img width="896" height="586" alt="image" src="https://github.com/user-attachments/assets/ca1cd828-0263-43cf-af7e-6c8d76a52683" />
+
+## Question 5
+
+> “Nama memberi arah,” kata Eonwe. Namai semua tokoh (hostname) sesuai glosarium, eonwe, earendil, elwing, cirdan, elrond, maglor, sirion, tirion, valmar, lindon, vingilot, dan verifikasi bahwa setiap host mengenali dan menggunakan hostname tersebut secara system-wide. Buat setiap domain untuk masing masing node sesuai dengan namanya (contoh: eru.<xxxx>.com) dan assign IP masing-masing juga. Lakukan pengecualian untuk node yang bertanggung jawab atas ns1 dan ns2
+
+Lakukan dengan semua client, ubah namanya menjadi nama client
+
+```bash
+echo "eonwe" > /etc/hostname
+hostname -F /etc/hostnam
+```
+
+```bash
+nano /etc/bind/zones/db.K21.com
+
+#Tambahkan ini
+Eonwe.K21.com.      IN      A       10.74.1.1
+Earendil.K21.com.   IN      A       10.74.1.2
+Elwing.K21.com.     IN      A       10.74.1.3
+Cirdan.K21.com.     IN      A       10.74.2.2
+Elrond.K21.com.     IN      A       10.74.2.3
+Maglor.K21.com.     IN      A       10.74.2.4
+Sirion.K21.com.     IN      A       10.74.3.6
+Lindon.K21.com.     IN      A       10.74.3.5
+Vingilot.K21.com.   IN      A       10.74.3.4
+```
+
+```bash
+named-checkzone K21.com /etc/bind/zones/db.K21.com
+```
+
+```bash
+Service named restart
+```
+
+Lalu cek dengan hostname `dig earendil.K21.com` & `dig sirion.K21.com`
+
+<img width="895" height="363" alt="image" src="https://github.com/user-attachments/assets/2525d91d-50f5-4dc2-b0ee-5005e42e6d77" />
+
+## Question 6
+
+> Lonceng Valmar berdentang mengikuti irama Tirion. Pastikan zone transfer berjalan, Pastikan Valmar (ns2) telah menerima salinan zona terbaru dari Tirion (ns1). Nilai serial SOA di keduanya harus sama
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+```bash
+
+```
+
+## Question 7
+
+> Peta kota dan pelabuhan dilukis. Sirion sebagai gerbang, Lindon sebagai web statis, Vingilot sebagai web dinamis. Tambahkan pada zona <xxxx>.com A record untuk sirion.<xxxx>.com (IP Sirion), lindon.<xxxx>.com (IP Lindon), dan vingilot.<xxxx>.com (IP Vingilot). Tetapkan CNAME :
+ - www.<xxxx>.com → sirion.<xxxx>.com, 
+ - static.<xxxx>.com → lindon.<xxxx>.com, dan 
+ - app.<xxxx>.com → vingilot.<xxxx>.com.
+Verifikasi dari dua klien berbeda bahwa seluruh hostname tersebut ter-resolve ke tujuan yang benar dan konsisten.
+
+## Question 8
+
+> Setiap jejak harus bisa diikuti. Di Tirion (ns1) deklarasikan satu reverse zone untuk segmen DMZ tempat Sirion, Lindon, Vingilot berada. Di Valmar (ns2) tarik reverse zone tersebut sebagai slave, isi PTR untuk ketiga hostname itu agar pencarian balik IP address mengembalikan hostname yang benar, lalu pastikan query reverse untuk alamat Sirion, Lindon, Vingilot dijawab authoritative.
+
+## Question 9
+
+> Lampion Lindon dinyalakan. Jalankan web statis pada hostname static.<xxxx>.com dan buka folder arsip /annals/ dengan autoindex (directory listing) sehingga isinya dapat ditelusuri. Akses harus dilakukan melalui hostname, bukan IP.
+
+## Question 10
+
+> Vingilot mengisahkan cerita dinamis. Jalankan web dinamis (PHP-FPM) pada hostname app.<xxxx>.com dengan beranda dan halaman about, serta terapkan rewrite sehingga /about berfungsi tanpa akhiran .php. Akses harus dilakukan melalui hostname.
