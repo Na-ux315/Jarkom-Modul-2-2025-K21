@@ -73,7 +73,8 @@ nano /etc/bind/named.conf.options
 options {
         directory "/var/cache/bind";
         forwarders { 192.168.122.1; };
-};
+        allow-query { any; };
+};  
 
 ```
 
