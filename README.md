@@ -167,9 +167,9 @@ Lakukan dengan semua client, ubah namanya menjadi nama client
 echo "eonwe" > /etc/hostname
 hostname -F /etc/hostname
 ```
-
+lalu kembali ke nodes tirion dan tambahkan di file db.K21.com
 ```bash
-nano /etc/bind/zones/db.K21.com
+nano /etc/bind/db.K21.com
 
 // Tambahkan ini
 
