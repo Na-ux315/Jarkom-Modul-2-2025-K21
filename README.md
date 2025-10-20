@@ -101,6 +101,10 @@ $TTL    604800
 ns1 IN  A   10.74.3.2    ; Tirion
 ns2 IN  A   10.74.3.3    ; Valmar
 
+```
+lalu jalankan ketiga command ini 
+```bash
+
 named-checkconf
 named-checkzone K21.com /etc/bind/db.K21.com
 
@@ -135,6 +139,8 @@ zone "K21.com" {
     file "db.K21.com";
     masters { 10.74.3.2; }; // IP Tirion
 };
+
+```bash 
 named-checkconf 
 Service named restart
 
