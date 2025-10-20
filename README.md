@@ -80,7 +80,7 @@ options {
 ```bash
 nano /etc/bind/named.conf.local
 
-zone "K21.com" { type master; file "/etc/bind/db.K21.com"; allow-transfer { 10.74.3.3; }; // IP Valmar notify yes; };
+zone "K21.com" { type master; file "/etc/bind/db.K21.com"; allow-transfer { 10.74.3.3; }; };
 ```
 
 ```bash
