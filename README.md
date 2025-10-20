@@ -284,7 +284,7 @@ dig app.K21.com
 
 Buat reverse zone untuk DMZ pada Tirion dan tarik sebagai slave di Valmar.
 
-Untuk cek  PTR menggunakan `dig -x [IP]`
+Untuk cek  PTR menggunakan `dig -x [IP Prefix]`
 
 ## Question 9
 
