@@ -165,7 +165,7 @@ Lakukan dengan semua client, ubah namanya menjadi nama client
 
 ```bash
 echo "eonwe" > /etc/hostname
-hostname -F /etc/hostnam
+hostname -F /etc/hostname
 ```
 
 ```bash
