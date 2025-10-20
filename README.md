@@ -153,7 +153,7 @@ echo "nameserver 10.74.3.2" > /etc/resolv.conf
 echo "nameserver 10.74.3.3" >> /etc/resolv.conf
 echo "nameserver 192.168.122.1" >> /etc/resolv.conf
 ```
-Untuk memverivikasi kita menggunakan `dig K21.com` begitu juga dengan `dig ns1.k25.com`
+Untuk memverivikasi kita menggunakan `dig K21.com` begitu juga dengan `dig ns1.K21.com`
 
 <img width="896" height="586" alt="image" src="https://github.com/user-attachments/assets/ca1cd828-0263-43cf-af7e-6c8d76a52683" />
 
