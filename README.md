@@ -143,7 +143,9 @@ zone "K21.com" {
 ```bash 
 named-checkconf 
 Service named restart
-
+```
+jalankan ini di node client lainnya selain eonwa
+```bash
 echo "nameserver 10.74.3.2" > /etc/resolv.conf
 echo "nameserver 10.74.3.3" >> /etc/resolv.conf
 echo "nameserver 192.168.122.1" >> /etc/resolv.conf
