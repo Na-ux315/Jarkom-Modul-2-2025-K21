@@ -173,23 +173,23 @@ nano /etc/bind/db.K21.com
 
 // Tambahkan ini
 
-Eonwe.K21.com.      IN      A       10.74.1.1
-Earendil.K21.com.   IN      A       10.74.1.2
-Elwing.K21.com.     IN      A       10.74.1.3
-Cirdan.K21.com.     IN      A       10.74.2.2
-Elrond.K21.com.     IN      A       10.74.2.3
-Maglor.K21.com.     IN      A       10.74.2.4
-Sirion.K21.com.     IN      A       10.74.3.6
-Lindon.K21.com.     IN      A       10.74.3.5
-Vingilot.K21.com.   IN      A       10.74.3.4
+eonwe.K21.com.      IN      A       10.74.1.1
+earendil.K21.com.   IN      A       10.74.1.2
+elwing.K21.com.     IN      A       10.74.1.3
+cirdan.K21.com.     IN      A       10.74.2.2
+elrond.K21.com.     IN      A       10.74.2.3
+maglor.K21.com.     IN      A       10.74.2.4
+sirion.K21.com.     IN      A       10.74.3.6
+lindon.K21.com.     IN      A       10.74.3.5
+vingilot.K21.com.   IN      A       10.74.3.4
 ```
 
 ```bash
-named-checkzone K21.com /etc/bind/zones/db.K21.com
+named-checkzone K21.com /etc/bind/db.K21.com
 ```
 
 ```bash
-Service named restart
+service named restart
 ```
 
 Lalu cek dengan hostname `dig earendil.K21.com` & `dig sirion.K21.com`
