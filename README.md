@@ -139,7 +139,7 @@ zone "K21.com" {
     file "db.K21.com";
     masters { 10.74.3.2; }; // IP Tirion
 };
-
+```
 ```bash 
 named-checkconf 
 Service named restart
