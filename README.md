@@ -227,15 +227,56 @@ Verifikasi dari dua klien berbeda bahwa seluruh hostname tersebut ter-resolve ke
 Node Tirion
 
 ```bash
-nano /etc/bind/zones/db.K21.com
+nano /etc/bind/db.K21.com
 
 // Lalu tambahkan bagian nomor serialnya +1 (awalnya 1 → 2)
-// Tambahkan juga
+2           ; Serial
 
-www.K21.com.        IN      CNAME   Sirion.K21.com.
-static.K21.com.     IN      CNAME   Lindon.K21.com.
-app.K21.com.        IN      CNAME   Vingilot.K21.com.
+// Tambahkan juga
+;
+; CNAME records - NOMOR 7
+;
+www     IN      CNAME   sirion.K21.com.
+static  IN      CNAME   lindon.K21.com.
+app     IN      CNAME   vingilot.K21.com.
 ```
+
+Cara cek nya buat cadangan lakuin `apt-get update && apt-get install bind9 -y`
+
+```bash
+named-checkconf
+
+named-checkzone K21.com /etc/bind/db.K21.com
+
+named
+```
+
+Test dari client lain:
+
+Edit server nya dulu pakai
+
+```bash
+nano /etc/resolv.conf
+nameserver 10.74.3.2    # Tirion (ns1) -> ini yang ditambah
+nameserver 10.74.3.3    # Valmar (ns2) -> ini yang ditambah
+nameserver 192.168.122.1
+```
+Dari Elrond:
+```bash
+dig www.K21.com
+dig static.K21.com
+dig app.K21.com
+```
+
+Dari Earendil:
+```bash
+dig www.K21.com
+dig static.K21.com
+dig app.K21.com
+```
+
+<img width="1919" height="154" alt="Screenshot 2025-10-20 140235" src="https://github.com/user-attachments/assets/237b3c1a-d3e5-48a8-af94-db9c3fcc7fb5" />
+
 
 ## Question 8
 
