@@ -103,10 +103,11 @@ ns1 IN  A   10.74.3.2    ; Tirion
 ns2 IN  A   10.74.3.3    ; Valmar
 
 ```
-lalu jalankan ketiga command ini 
-```bash
+lalu jalankan command ini 
 
+```bash
 named-checkconf
+
 named-checkzone K21.com /etc/bind/db.K21.com
 
 named
@@ -142,8 +143,9 @@ zone "K21.com" {
 };
 ```
 ```bash 
-named-checkconf 
-Service named restart
+named-checkconf
+
+service named restart
 ```
 jalankan ini di node client lainnya selain eonwa
 ```bash
