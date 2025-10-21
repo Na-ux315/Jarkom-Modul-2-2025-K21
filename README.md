@@ -257,6 +257,7 @@ Edit server nya dulu pakai
 
 ```bash
 nano /etc/resolv.conf
+
 nameserver 10.74.3.2    # Tirion (ns1) -> ini yang ditambah
 nameserver 10.74.3.3    # Valmar (ns2) -> ini yang ditambah
 nameserver 192.168.122.1
@@ -277,14 +278,111 @@ dig app.K21.com
 
 <img width="1919" height="154" alt="Screenshot 2025-10-20 140235" src="https://github.com/user-attachments/assets/237b3c1a-d3e5-48a8-af94-db9c3fcc7fb5" />
 
-
 ## Question 8
 
 > Setiap jejak harus bisa diikuti. Di Tirion (ns1) deklarasikan satu reverse zone untuk segmen DMZ tempat Sirion, Lindon, Vingilot berada. Di Valmar (ns2) tarik reverse zone tersebut sebagai slave, isi PTR untuk ketiga hostname itu agar pencarian balik IP address mengembalikan hostname yang benar, lalu pastikan query reverse untuk alamat Sirion, Lindon, Vingilot dijawab authoritative.
 
 Buat reverse zone untuk DMZ pada Tirion dan tarik sebagai slave di Valmar.
 
-Untuk cek  PTR menggunakan `dig -x [IP Prefix]`
+DI TIRION (ns1/master):
+
+Buat reverse zone file:
+
+```bash
+nano /etc/bind/db.10.74.3
+```
+
+Isi dengan:
+
+```bash
+;
+; BIND reverse data file for DMZ 10.74.3.0/24
+;
+$TTL    604800
+@       IN      SOA     ns1.K21.com. admin.K21.com. (
+                        1         ; Serial
+                        604800    ; Refresh
+                        86400     ; Retry
+                        2419200   ; Expire
+                        604800 )  ; Negative Cache TTL
+
+;
+; Name servers
+;
+@       IN      NS      ns1.K21.com.
+@       IN      NS      ns2.K21.com.
+
+;
+; PTR records - IP to hostname mapping
+;
+6       IN      PTR     sirion.K21.com.
+5       IN      PTR     lindon.K21.com.
+4       IN      PTR     vingilot.K21.com.
+2       IN      PTR     tirion.K21.com.
+3       IN      PTR     valmar.K21.com.
+```
+
+Edit /etc/bind/named.conf.local:
+
+```bash
+nano /etc/bind/named.conf.local
+```
+
+Tambahkan:
+
+```bash
+// Reverse zone untuk DMZ
+zone "3.74.10.in-addr.arpa" {
+    type master;
+    file "/etc/bind/db.10.74.3";
+    allow-transfer { 10.74.3.3; }; // Valmar
+    notify yes;
+};
+```
+
+DI VALMAR (ns2/slave):
+
+Edit /etc/bind/named.conf.local:
+
+```bash
+nano /etc/bind/named.conf.local
+```
+
+Tambahkan:
+
+```bash
+// Reverse zone slave
+zone "3.74.10.in-addr.arpa" {
+    type slave;
+    file "db.10.74.3";
+    masters { 10.74.3.2; }; // Tirion
+};
+```
+
+Kita coba test di tirion:
+
+```bash
+named-checkzone 3.74.10.in-addr.arpa /etc/bind/db.10.74.3
+
+named-checkconf
+
+named
+```
+
+Kita coba test di valmar:
+
+```bash
+named-checkconf
+
+named
+```
+
+Untuk cek  PTR menggunakan 
+
+```bash
+dig -x 10.74.3.6 @10.74.3.2    # Dari Tirion
+dig -x 10.74.3.6 @10.74.3.3    # Dari Valmar
+```
 
 ## Question 9
 
