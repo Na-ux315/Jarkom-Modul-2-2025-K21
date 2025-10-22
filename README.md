@@ -384,6 +384,9 @@ dig -x 10.74.3.6 @10.74.3.2    # Dari Tirion
 dig -x 10.74.3.6 @10.74.3.3    # Dari Valmar
 ```
 
+<img width="1919" height="616" alt="image" src="https://github.com/user-attachments/assets/620b3a9d-72fb-41da-aef5-7dfd05144aab" />
+
+
 ## Question 9
 
 > Lampion Lindon dinyalakan. Jalankan web statis pada hostname static.<xxxx>.com dan buka folder arsip /annals/ dengan autoindex (directory listing) sehingga isinya dapat ditelusuri. Akses harus dilakukan melalui hostname, bukan IP.
