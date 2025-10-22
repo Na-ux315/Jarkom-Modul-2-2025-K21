@@ -276,7 +276,8 @@ dig static.K21.com
 dig app.K21.com
 ```
 
-<img width="1919" height="154" alt="Screenshot 2025-10-20 140235" src="https://github.com/user-attachments/assets/237b3c1a-d3e5-48a8-af94-db9c3fcc7fb5" />
+<img width="1919" height="647" alt="image" src="https://github.com/user-attachments/assets/41c1073e-55e2-4830-a2d3-e4b22d11a44d" />
+
 
 ## Question 8
 
